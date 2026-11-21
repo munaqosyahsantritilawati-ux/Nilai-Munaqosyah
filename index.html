@@ -7,14 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
-:root{--hijau:#0F766E;--hijau-muda:#ECFDF5;--krem:#FFFBEB;--abu:#F8FAFC;--garis:#E2E8F0;--teks:#1E293B;--merah:#DC2626;--merah-bg:#FEF2F2}
+:root{--hijau:#0F766E;--krem:#FFFBEB;--garis:#E2E8F0;--teks:#1E293B;--merah:#DC2626;--merah-bg:#FEF2F2}
 body{margin:0;background:#F1F5F9;color:var(--teks);padding:14px}
 h1{font-size:21px;margin:0} .sub{color:#64748B;font-size:13px;margin:4px 0 14px}
 .top-tabs{display:flex;gap:8px;margin-bottom:12px}
 .top-tabs button{flex:1;padding:12px;border:1px solid var(--garis);background:#fff;border-radius:12px;font-weight:700;cursor:pointer}
 .top-tabs button.aktif{background:var(--hijau);color:#fff;border-color:var(--hijau)}
-
-/* WRAP KANAN KIRI */
 .layout{display:flex;gap:14px;align-items:flex-start}
 .kiri{width:310px;flex:none;position:sticky;top:14px}
 .kanan{flex:1;min-width:0}
@@ -24,7 +22,6 @@ h1{font-size:21px;margin:0} .sub{color:#64748B;font-size:13px;margin:4px 0 14px}
 select:disabled{background:#F1F5F9;color:#94A3B8}
 .card small{color:#94A3B8;font-size:11px;display:block;margin-top:6px;line-height:1.5}
 .info{background:var(--krem);border:1px solid #FDE68A;border-radius:12px;padding:10px;font-size:12px;line-height:1.6}
-
 .bar{background:#fff;border:1px solid var(--garis);border-radius:16px;padding:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .bar input{flex:1;min-width:150px;padding:10px;border:1px solid #CBD5E1;border-radius:11px}
 .mode{display:flex;background:#F1F5F9;border-radius:11px;padding:3px}
@@ -33,9 +30,6 @@ select:disabled{background:#F1F5F9;color:#94A3B8}
 .btn{padding:10px 14px;border-radius:11px;border:1px solid #CBD5E1;background:#fff;font-weight:700;cursor:pointer;font-size:13px}
 .btn-hijau{background:var(--hijau);color:#fff;border-color:var(--hijau)}
 .btn:disabled{opacity:.5}
-.btn-kecil{padding:8px 12px;font-size:12px}
-
-/* TABEL - HEADER TIDAK PINDAH */
 .tabel-wrap{background:#fff;border:1px solid var(--garis);border-radius:16px;margin-top:12px;overflow:auto;max-height:62vh}
 table{width:100%;border-collapse:collapse;min-width:720px}
 th{position:sticky;top:0;background:#0F172A;color:#fff;z-index:2;padding:11px 10px;text-align:left;font-size:12px;white-space:nowrap}
@@ -48,13 +42,9 @@ td input.ok{border-color:#86EFAC;background:#F0FDF4}
 .badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}
 .badge-ok{background:#DCFCE7;color:#166534} .badge-no{background:#FEF9C3;color:#854D0E}
 .total{font-size:12px;font-weight:700;color:#0F766E}
-
-/* MODE BACA FRIENDLY */
 body.baca{background:#FFFBEB}
 body.baca .tabel-wrap{max-height:none}
 body.baca td input{border-color:transparent;background:#FFFBEB}
-
-/* POPUP CANTIK */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99;align-items:center;justify-content:center;padding:16px}
 .overlay.show{display:flex}
 .popup{background:#fff;border-radius:20px;padding:24px 20px;text-align:center;max-width:360px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.2)}
@@ -62,20 +52,19 @@ body.baca td input{border-color:transparent;background:#FFFBEB}
 .popup button{width:100%;padding:12px;border:0;background:var(--hijau);color:#fff;border-radius:12px;font-weight:800;cursor:pointer}
 .err-box{display:none;background:var(--merah-bg);border:1px solid #FECACA;color:#991B1B;padding:10px 12px;border-radius:12px;font-size:12px;margin-top:10px;line-height:1.6}
 .err-box.show{display:block}
-#rekapWrap{display:none}
+#viewRekap{display:none}
 @media(max-width:850px){.layout{flex-direction:column}.kiri{width:100%;position:static}.tabel-wrap{max-height:55vh}}
 </style>
 </head>
 <body>
-<h1>📖 Rekap Nilai Munaqosyah 2026</h1>
-<p class="sub">Tilawati • Mudah, Menyenangkan • Irhamna Bilqur'an</p>
+<h1>📖 Nilai Munaqosyah 2026</h1>
+<p class="sub">Bismillaah • Tilawati • Mudah, Menyenangkan • Irhamna bil Qur'an</p>
 
 <div class="top-tabs">
   <button id="tabInput" class="aktif" onclick="showTab('input')">✏️ Input Nilai</button>
   <button id="tabRekap" onclick="showTab('rekap')">📊 Rekap per Munaqisy</button>
 </div>
 
-<!-- TAB INPUT -->
 <div id="viewInput">
 <div class="layout">
   <div class="kiri">
@@ -105,7 +94,6 @@ body.baca td input{border-color:transparent;background:#FFFBEB}
       <select id="filter" onchange="renderTabel()"><option value="semua">Semua Santri</option><option value="belum">Belum Diisi / Belum Lengkap</option><option value="sudah">Sudah Lengkap</option></select>
     </div>
   </div>
-
   <div class="kanan">
     <div class="bar">
       <input id="cari" placeholder="Cari nama / nomor santri..." oninput="renderTabel()" disabled>
@@ -114,7 +102,6 @@ body.baca td input{border-color:transparent;background:#FFFBEB}
     </div>
     <div id="errBox" class="err-box"></div>
     <div class="tabel-wrap"><div id="tabelArea"><div class="kosong">Pilih Bidang → Ruang → Munaqisy dulu</div></div></div>
-    <!-- TOMBOL PROPORSIONAL, TIDAK MENUHI HALAMAN -->
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap">
       <span id="progress" class="total" style="margin-right:auto;align-self:center"></span>
       <button class="btn" id="btnSimpanSebagian" onclick="simpan(false)" disabled>💾 Simpan yang Terisi</button>
@@ -124,7 +111,6 @@ body.baca td input{border-color:transparent;background:#FFFBEB}
 </div>
 </div>
 
-<!-- TAB REKAP -->
 <div id="viewRekap">
   <div class="card">
     <label>FILTER REKAP</label>
@@ -137,14 +123,10 @@ body.baca td input{border-color:transparent;background:#FFFBEB}
   <div class="tabel-wrap" style="max-height:none"><div id="rekapArea"><div class="kosong">Klik Muat Rekap</div></div></div>
 </div>
 
-<!-- POPUP -->
 <div class="overlay" id="overlay"><div class="popup"><div class="icon">🤲</div><h3>Alhamdulillaah</h3><p id="popupText">Nilai berhasil disimpan</p><button onclick="tutupPopup()">Baik, Lanjutkan</button></div></div>
 
 <script>
-// ===== CONFIG - GANTI URL INI SETELAH DEPLOY APPS SCRIPT =====
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtbkoG9g0FzCMNIfMGwnkvTxMpGDhvNI2Z-X0b9NrYl8n3i3phtChL4HxW_ZIV6r-L/exec";
-
-// ===== DATA MASTER =====
 const DATA_RUANG = {
   "Al Qur'an": ["Ruang 1","Ruang 2","Ruang 3"],
   "Teori Tajwid": ["Ruang 1","Ruang 2"],
@@ -152,7 +134,6 @@ const DATA_RUANG = {
   "Surat Pendek": ["Ruang 1","Ruang 2"],
   "Ayat Pilihan": ["Ruang 1","Ruang 2"]
 };
-// Pembagian santri per ruang
 function getRange(bidang, ruang){
   if(bidang==="Al Qur'an"){
     if(ruang==="Ruang 1") return [1,89];
@@ -162,7 +143,6 @@ function getRange(bidang, ruang){
   if(ruang==="Ruang 1") return [1,133];
   return [134,266];
 }
-// Munaqisy per Bidang+Ruang - total 25 orang
 const DATA_MUNAQISY = {
   "Al Qur'an|Ruang 1": ["Andik Purwanto","Khozinatul Asror","Moh. Nasrulloh Al-Hariisi","Nurul Huda"],
   "Al Qur'an|Ruang 2": ["Moh. Mahfud","Imroatus Safaroh","Mar'atul Khoir"],
@@ -176,7 +156,6 @@ const DATA_MUNAQISY = {
   "Ayat Pilihan|Ruang 1": ["Ahmad Hasyim Asy'ari","Aqibatul Afwa Hidayatullah"],
   "Ayat Pilihan|Ruang 2": ["Agus Mabrur","Anik Setiyowati"]
 };
-// Batas nilai
 const BATAS = {
   "Al Qur'an": [
     {key:"kelulusan", label:"Kelulusan", min:0, max:6},
@@ -190,31 +169,30 @@ const BATAS = {
   "Surat Pendek": [{key:"nilai", label:"Nilai Surat Pendek", min:0, max:90}],
   "Ayat Pilihan": [{key:"nilai", label:"Nilai Ayat Pilihan", min:0, max:90}]
 };
-// Daftar santri 1-266 - GANTI dengan fetch GSheet kalau sudah ada nama asli
-// Format: {no:1, nama:"..."}
-// GANTI JADI INI:
-let ALL_SANTRI = [];
 
+// === FIX 2: loadSantri dengan fallback jelas ===
+let ALL_SANTRI = [];
 async function loadSantri(){
   try{
     const res = await fetch(`${APPS_SCRIPT_URL}?action=santri`);
     const j = await res.json();
-    if(j.ok && j.santri.length > 0){
+    if(j.ok && j.santri && j.santri.length > 0){
       ALL_SANTRI = j.santri;
       console.log('Santri loaded:', ALL_SANTRI.length);
+    } else {
+      console.log('Sheet Santri kosong / tidak ada, pakai fallback', j);
+      document.getElementById('infoPeserta').innerHTML = '⚠️ Sheet <b>Santri</b> kosong / tidak ditemukan. Cek nama tab harus persis <b>Santri</b> (A=No, B=Nama). Menampilkan data darurat.';
+      for(let i=1;i<=266;i++){ ALL_SANTRI.push({no:i, nama:"Santri "+String(i).padStart(3,'0')}); }
     }
   }catch(e){
-    console.log('Gagal load santri, pakai data darurat', e);
-    // Fallback kalau GSheet belum kebuka, biar web tidak kosong
+    console.log('Gagal load santri', e);
     for(let i=1;i<=266;i++){ ALL_SANTRI.push({no:i, nama:"Santri "+String(i).padStart(3,'0')}); }
   }
-  // Setelah santri ke-load, baru render kalau sudah pilih munaqisy
   if(document.getElementById('munaqisy').value) renderTabel();
 }
-// Panggil saat halaman dibuka
 loadSantri();
 
-let nilaiData = {}; // { "no": {kelulusan:..., fashohah:...} }
+let nilaiData = {};
 let mode = 'input';
 let rekapData = [];
 
@@ -243,15 +221,15 @@ function onRuang(){
   const [a,z] = getRange(b,r);
   document.getElementById('infoRuang').innerText = `${b} - ${r} : Santri No ${a} - ${z} (${z-a+1} santri)`;
 }
-function onMunaqisy(){
+// === FIX 3: await loadNilaiTersimpan ===
+async function onMunaqisy(){
   const m = document.getElementById('munaqisy').value;
   if(!m) return;
   document.getElementById('cari').disabled = false;
   document.getElementById('btnSimpanSebagian').disabled = false;
   document.getElementById('btnSimpanSemua').disabled = false;
   nilaiData = {};
-  loadNilaiTersimpan();
-  renderTabel();
+  await loadNilaiTersimpan();
 }
 function getSantriFiltered(){
   const b = document.getElementById('bidang').value;
@@ -293,8 +271,8 @@ function renderTabel(){
   let totalLengkap = ALL_SANTRI.filter(s=>{ const [a,z]=getRange(b,r); return s.no>=a&&s.no<=z && isLengkap(s.no)}).length;
   const [a,z]=getRange(b,r);
   document.getElementById('progress').innerText = `Progress: ${totalLengkap} / ${z-a+1} sudah lengkap`;
-  if(list.length===0){ document.getElementById('tabelArea').innerHTML='<div class="kosong">Tidak ada santri</div>'; return; }
-  let head = `<table><thead><tr><th style="position:sticky;left:0">No</th><th>Nama Santri</th>`;
+  if(list.length===0){ document.getElementById('tabelArea').innerHTML='<div class="kosong">Tidak ada santri<br><small>Cek Console (F12) - Santri loaded berapa?</small></div>'; return; }
+  let head = `<table><thead><tr><th>No</th><th>Nama Santri</th>`;
   cols.forEach(c=> head+=`<th>${c.label}<br><small style="font-weight:400;opacity:.8">${c.min}-${c.max}</small></th>`);
   head+=`<th>Total</th><th>Status</th></tr></thead><tbody>`;
   let body='';
@@ -329,9 +307,7 @@ function onInput(el){
 function validate(simpanSemua){
   const b = document.getElementById('bidang').value;
   const cols = BATAS[b];
-  const list = getSantriFiltered();
   let errKosong=[], errRange=[];
-  // Cek yang terisi tapi di luar batas + yang kosong kalau simpan semua
   document.querySelectorAll('#tabelArea input').forEach(inp=>{
     const no = inp.dataset.no, key = inp.dataset.key;
     const col = cols.find(c=>c.key===key);
@@ -350,7 +326,6 @@ function validate(simpanSemua){
     if(errRange.length) html+=`⚠️ <b>Nilai di luar batas:</b><br>${errRange.slice(0,5).join('<br>')}${errRange.length>5?`<br>+ ${errRange.length-5} lagi...`:''}<br>`;
     if(errKosong.length) html+=`🔴 <b>Masih kosong (${errKosong.length}):</b><br>${errKosong.slice(0,8).join(', ')}${errKosong.length>8?' ...':''}<br>Yang merah di atas wajib diisi kalau Simpan Semua. Kalau mau kirim separo, pakai tombol <b>Simpan yang Terisi</b>.`;
     box.innerHTML=html; box.classList.add('show');
-    // Scroll ke input merah pertama
     const firstErr = document.querySelector('#tabelArea input.err');
     if(firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
     return false;
@@ -364,25 +339,23 @@ async function simpan(simpanSemua){
   const r = document.getElementById('ruang').value;
   const m = document.getElementById('munaqisy').value;
   const cols = BATAS[b];
-  // Kumpulkan hanya yang ada isinya (bisa separo)
   let rows=[];
   Object.keys(nilaiData).forEach(no=>{
     const d = nilaiData[no];
-    const lengkap = cols.every(c=> d[c.key]!==undefined && d[c.key]!=='');
-    if(!simpanSemua && !lengkap){
-      // Simpan separo: tetap kirim yang terisi, tapi tandai belum lengkap
-    }
     if(Object.keys(d).length===0) return;
+    const lengkap = cols.every(c=> d[c.key]!==undefined && d[c.key]!=='');
     let obj = {no:Number(no), nama: ALL_SANTRI.find(s=>s.no==no)?.nama||'', bidang:b, ruang:r, munaqisy:m, lengkap: lengkap?'Lengkap':'Sebagian'};
     cols.forEach(c=> obj[c.key]= d[c.key] ?? '');
-    // total
     obj.total = cols.reduce((sum,c)=> sum + (Number(d[c.key])||0),0);
     rows.push(obj);
   });
   if(rows.length===0){ alert('Belum ada nilai yang diisi'); return; }
-  // Kirim ke Apps Script - tanpa bentrok karena pakai LockService di server
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {method:'POST', body: JSON.stringify({action:'save', rows})});
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({action:'save', rows})
+    });
     const j = await res.json();
     if(j.ok){
       document.getElementById('popupText').innerHTML = `Alhamdulillaah, nilai berhasil disimpan.<br><b>${rows.length} santri</b> • ${b} • ${r} • ${m}`;
@@ -392,9 +365,8 @@ async function simpan(simpanSemua){
       alert('Gagal simpan: '+j.msg);
     }
   }catch(e){
-    // Fallback kalau belum setting Apps Script: simpan lokal dulu
     localStorage.setItem('nilai_'+b+'_'+r+'_'+m, JSON.stringify(nilaiData));
-    document.getElementById('popupText').innerHTML = `Alhamdulillaah, nilai berhasil disimpan (lokal, belum ke GSheet karena URL Apps Script belum diisi).<br><b>${rows.length} santri</b>`;
+    document.getElementById('popupText').innerHTML = `Alhamdulillaah, nilai berhasil disimpan (lokal).<br><b>${rows.length} santri</b>`;
     document.getElementById('overlay').classList.add('show');
   }
 }
@@ -405,15 +377,16 @@ function resetAll(){
 }
 async function loadNilaiTersimpan(){
   const b=document.getElementById('bidang').value, r=document.getElementById('ruang').value, m=document.getElementById('munaqisy').value;
-  // 1. Coba dari GSheet
   try{
     const res = await fetch(`${APPS_SCRIPT_URL}?action=get&bidang=${encodeURIComponent(b)}&ruang=${encodeURIComponent(r)}&munaqisy=${encodeURIComponent(m)}`);
     const j = await res.json();
-    if(j.ok && j.rows){ j.rows.forEach(row=>{ nilaiData[row.no]={}; BATAS[b].forEach(c=>{ if(row[c.key]!==''&&row[c.key]!=null) nilaiData[row.no][c.key]=Number(row[c.key]); }); }); renderTabel(); return; }
+    if(j.ok && j.rows){
+      j.rows.forEach(row=>{
+        nilaiData[row.no]={};
+        BATAS[b].forEach(c=>{ if(row[c.key]!==''&&row[c.key]!=null) nilaiData[row.no][c.key]=Number(row[c.key]); });
+      });
+    }
   }catch(e){}
-  // 2. Fallback local
-  const local = localStorage.getItem('nilai_'+b+'_'+r+'_'+m);
-  if(local) nilaiData = JSON.parse(local);
   renderTabel();
 }
 function showTab(t){
@@ -423,9 +396,7 @@ function showTab(t){
   document.getElementById('tabRekap').classList.toggle('aktif', t==='rekap');
   if(t==='rekap') loadRekap();
 }
-// ===== REKAP: 1 BARIS = 1 MUNAQISY x 1 BIDANG =====
 async function loadRekap(){
-  // Isi dropdown munaqisy rekap
   const allM = Object.values(DATA_MUNAQISY).flat();
   const uniq = [...new Set(allM)].sort();
   isiSelect('rekapMunaqisy', uniq, 'Semua Munaqisy');
@@ -433,17 +404,7 @@ async function loadRekap(){
     const res = await fetch(`${APPS_SCRIPT_URL}?action=rekap`);
     const j = await res.json();
     if(j.ok) rekapData = j.rekap;
-  }catch(e){
-    // Fallback: rekap dari localStorage kalau belum ada Apps Script
-    rekapData = [];
-    Object.keys(localStorage).forEach(k=>{
-      if(k.startsWith('nilai_')){
-        const parts = k.replace('nilai_','').split('_');
-        // contoh key: nilai_Al Qur'an_Ruang 1_Andik...
-        // Sederhanakan: hitung dari nilaiData lokal
-      }
-    });
-  }
+  }catch(e){ rekapData = []; }
   renderRekap();
 }
 function renderRekap(){
@@ -458,7 +419,6 @@ function renderRekap(){
   });
   document.getElementById('rekapArea').innerHTML = html+'</tbody></table>';
 }
-// Init dropdown rekap
 (function(){ const allM = Object.values(DATA_MUNAQISY).flat(); isiSelect('rekapMunaqisy', [...new Set(allM)].sort(), 'Semua Munaqisy'); })();
 </script>
 </body>
