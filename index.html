@@ -1,440 +1,465 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Munaqosyah 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penilaian Munaqosyah</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-  body{background:#f1f5f9;margin:0;padding:16px;color:#1e293b}
-  .wrap{max-width:900px;margin:auto}
-  h1{text-align:center;color:#0f766e;margin:8px 0 4px}
-  p.sub{text-align:center;color:#64748b;margin:0 0 16px}
-  .identitas{display:flex;gap:12px;flex-wrap:wrap}
-  .identitas .card{flex:1;min-width:260px;background:#fff;padding:16px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-  label{font-weight:700;font-size:13px;display:block;margin-bottom:6px}
-  select,input{width:100%;padding:11px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px;outline:none;background:#fff}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .toolbar input{flex:1;min-width:200px}
-  .toolbar button{padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;font-weight:700;cursor:pointer}
-  table{width:100%;border-collapse:collapse;background:#fff;margin-top:12px;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
- /* === HEADER TABEL NEMPEL - VERSI FINAL === */
-#tabelWrap{
-  height: 75vh; /* tinggi kotaknya, sisanya di-scroll di dalam sini */
-  overflow: auto; /* ini yang bikin scroll di dalam kotak */
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.06);
-}
-#tabelWrap table{
-  width: 100%;
-  border-collapse: separate; /* WAJIB separate, jangan collapse */
-  border-spacing: 0;
-  margin-top: 0;
-  box-shadow: none;
-  border-radius: 0;
-  overflow: visible; /* jangan hidden, ini yang bikin sticky mati */
-}
-#tabelWrap thead th{
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #76630f; /* samakan dengan warna header di foto */
-  color: #fff;
-}
-#tabelWrap thead tr{
-  background: #76630f;
-}
-  th{background:#76630f;color:#fff;padding:10px 8px;font-size:13px}
-  td{padding:8px;border-bottom:1px solid #eef2f7;text-align:center;font-size:14px}
-  td.nama{text-align:left;font-weight:600}
-  input.nilai{width:70px;padding:8px;text-align:center;border:2px solid #e2e8f0;border-radius:8px;font-size:15px}
-  input.nilai:disabled{background:#f1f5f9;color:#94a3b8}
-  input.nilai.error{border-color:#ef4444;background:#fef2f2}
-  input.nilai.filled{border-color:#22c55e;background:#f0fdf4}
-  .msg-error{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 14px;border-radius:10px;margin-top:12px;display:none}
-  .msg-error.show{display:block}
- /* === TOMBOL SIMPAN - VERSI RAMPING & PROFESIONAL === */
-.actions{
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  position: sticky;
-  bottom: 10px;
-  z-index: 30;
-  width: fit-content;
-  margin: 14px auto 0 auto;
-  padding: 6px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(10px);
-  border-radius: 999px; /* jadi kapsul */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-  border: 1px solid #e2e8f0;
-}
-.actions button{
-  flex: none !important;
-  padding: 9px 18px !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  border-radius: 999px !important;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.actions button:active{
-  transform: scale(0.96);
-}
-.btn-draft{
-  background: transparent !important;
-  color: #475569 !important;
-  border: none !important;
-}
-.btn-draft:hover{
-  background: #f1f5f9 !important;
-}
-.btn-save{
-  background: #0f766e !important;
-  color: #fff !important;
-  border: none !important;
-  box-shadow: 0 2px 8px rgba(15,118,110,0.30) !important;
-}
-.btn-save:hover{
-  background: #0d9488 !important;
-}
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
-  .overlay.show{display:flex}
-  .popup{background:#fff;padding:28px 22px;border-radius:20px;text-align:center;max-width:380px;width:100%}
-  .popup button{background:#0f766e;color:#fff;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
-  .loading{text-align:center;padding:20px;color:#64748b}
-  .filter-box{margin-top:12px;background:#fff;padding:12px;border-radius:12px;display:flex;gap:8px;flex-wrap:wrap}
-  .filter-box button{padding:9px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-weight:700}
-  .filter-box button.active{background:#0f7631;color:#fff;border-color:#0f766e}
+*{box-sizing:border-box;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+:root{--hijau:#0F766E;--hijau-muda:#ECFDF5;--krem:#FFFBEB;--abu:#F8FAFC;--garis:#E2E8F0;--teks:#1E293B;--merah:#DC2626;--merah-bg:#FEF2F2}
+body{margin:0;background:#F1F5F9;color:var(--teks);padding:14px}
+h1{font-size:21px;margin:0} .sub{color:#64748B;font-size:13px;margin:4px 0 14px}
+.top-tabs{display:flex;gap:8px;margin-bottom:12px}
+.top-tabs button{flex:1;padding:12px;border:1px solid var(--garis);background:#fff;border-radius:12px;font-weight:700;cursor:pointer}
+.top-tabs button.aktif{background:var(--hijau);color:#fff;border-color:var(--hijau)}
 
-/* Bikin Cari + Refresh + Simpan jadi 1 baris */
-.bar-atas{
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-top: 12px;
-}
-.bar-atas .toolbar{
-  flex: 1;
-  display: flex !important;
-  margin-top: 0 !important;
-  gap: 8px;
-}
-.bar-atas .toolbar input{
-  flex: 1;
-  min-width: 0; /* biar tidak maksa lebar */
-}
-.bar-atas .toolbar button{
-  white-space: nowrap;
-  padding: 11px 12px;
-}
-.bar-atas .actions{
-  display: flex !important;
-  flex: none;
-  margin: 0 !important;
-  padding: 6px;
-  width: auto;
-  justify-content: flex-end;
-}
+/* WRAP KANAN KIRI */
+.layout{display:flex;gap:14px;align-items:flex-start}
+.kiri{width:310px;flex:none;position:sticky;top:14px}
+.kanan{flex:1;min-width:0}
+.card{background:#fff;border:1px solid var(--garis);border-radius:16px;padding:12px;margin-bottom:10px}
+.card label{font-size:11px;font-weight:800;letter-spacing:.5px;color:#475569;display:block;margin-bottom:6px}
+.card select{width:100%;padding:11px;border:1px solid #CBD5E1;border-radius:11px;font-size:14px;background:#fff}
+select:disabled{background:#F1F5F9;color:#94A3B8}
+.card small{color:#94A3B8;font-size:11px;display:block;margin-top:6px;line-height:1.5}
+.info{background:var(--krem);border:1px solid #FDE68A;border-radius:12px;padding:10px;font-size:12px;line-height:1.6}
 
-/* === MODE BACA - KONTRAST TAPI ADEM === */
-body{
-  background: #F2F0E9 !important; /* krem kertas, bukan putih silau */
-  color: #1E293B !important;
-}
-h1{
-  color: #134E4A !important; /* hijau tua, lebih pekat dari sebelumnya */
-}
-p.sub{
-  color: #57534E !important;
-}
-.identitas .card,
-.filter-box,
-#tabelWrap{
-  background: #FFFEFA !important; /* putih hangat, bukan putih dingin */
-  border: 1px solid #E7E5E4 !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
-}
-label{
-  color: #292524 !important;
-}
-select, input{
-  background: #FFFFFF !important;
-  border-color: #D6D3D1 !important;
-  color: #1C1917 !important;
-}
-select:focus, input:focus{
-  border-color: #0F766E !important;
-  box-shadow: 0 0 0 3px rgba(15,118,110,0.15) !important;
-}
-#tabelWrap thead th{
-  background: #134E4A !important; /* header lebih gelap, tulisan putih jadi lebih kontras */
-  color: #FFFFFF !important;
-}
-#tabelWrap td{
-  border-bottom: 1px solid #E7E5E4 !important;
-  color: #1C1917 !important;
-}
-#tabelWrap td.nama{
-  color: #0C0A09 !important;
-}
-input.nilai{
-  background: #FFFFFF !important;
-  border-color: #D6D3D1 !important;
-  color: #1C1917 !important;
-}
-input.nilai.filled{
-  background: #ECFDF5 !important;
-  border-color: #0F766E !important;
-}
-.bar-atas .actions{
-  background: #FFFEFA !important;
-  border: 1px solid #E7E5E4 !important;
-}
+.bar{background:#fff;border:1px solid var(--garis);border-radius:16px;padding:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar input{flex:1;min-width:150px;padding:10px;border:1px solid #CBD5E1;border-radius:11px}
+.mode{display:flex;background:#F1F5F9;border-radius:11px;padding:3px}
+.mode button{border:0;background:transparent;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer}
+.mode button.aktif{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.btn{padding:10px 14px;border-radius:11px;border:1px solid #CBD5E1;background:#fff;font-weight:700;cursor:pointer;font-size:13px}
+.btn-hijau{background:var(--hijau);color:#fff;border-color:var(--hijau)}
+.btn:disabled{opacity:.5}
+.btn-kecil{padding:8px 12px;font-size:12px}
+
+/* TABEL - HEADER TIDAK PINDAH */
+.tabel-wrap{background:#fff;border:1px solid var(--garis);border-radius:16px;margin-top:12px;overflow:auto;max-height:62vh}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{position:sticky;top:0;background:#0F172A;color:#fff;z-index:2;padding:11px 10px;text-align:left;font-size:12px;white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid #F1F5F9;font-size:13px;vertical-align:middle}
+tr:nth-child(even) td{background:#F8FAFC}
+td input{width:68px;padding:8px;border:1.5px solid #CBD5E1;border-radius:9px;text-align:center;font-weight:700;font-size:13px;background:#fff}
+td input.err{border-color:var(--merah)!important;background:var(--merah-bg)!important;box-shadow:0 0 0 2px #FECACA}
+td input.ok{border-color:#86EFAC;background:#F0FDF4}
+.kosong{padding:32px;text-align:center;color:#94A3B8;line-height:1.6}
+.badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}
+.badge-ok{background:#DCFCE7;color:#166534} .badge-no{background:#FEF9C3;color:#854D0E}
+.total{font-size:12px;font-weight:700;color:#0F766E}
+
+/* MODE BACA FRIENDLY */
+body.baca{background:#FFFBEB}
+body.baca .tabel-wrap{max-height:none}
+body.baca td input{border-color:transparent;background:#FFFBEB}
+
+/* POPUP CANTIK */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99;align-items:center;justify-content:center;padding:16px}
+.overlay.show{display:flex}
+.popup{background:#fff;border-radius:20px;padding:24px 20px;text-align:center;max-width:360px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.popup .icon{font-size:44px} .popup h3{margin:8px 0 6px;font-size:18px} .popup p{color:#64748B;font-size:13px;line-height:1.6;margin:0 0 16px}
+.popup button{width:100%;padding:12px;border:0;background:var(--hijau);color:#fff;border-radius:12px;font-weight:800;cursor:pointer}
+.err-box{display:none;background:var(--merah-bg);border:1px solid #FECACA;color:#991B1B;padding:10px 12px;border-radius:12px;font-size:12px;margin-top:10px;line-height:1.6}
+.err-box.show{display:block}
+#rekapWrap{display:none}
+@media(max-width:850px){.layout{flex-direction:column}.kiri{width:100%;position:static}.tabel-wrap{max-height:55vh}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>📋 Rekap Nilai Munaqosyah 2026</h1>
-  <p class="sub">Isi sesuai santri yang sudah Ustadz-Ustadzah uji. Yang lain, biarkan kosong.</p>
-  <div class="layout-utama"></div>
-  <div class="identitas">
-    <div class="card"><label>Nama Munaqisy</label>
-      <select id="penguji"><option value="">-- Pilih Nama Munaqisy --</option></select>
+<h1>📖 Rekap Nilai Munaqosyah 2026</h1>
+<p class="sub">Tilawati • Mudah, Menyenangkan • Irhamna Bilqur'an</p>
+
+<div class="top-tabs">
+  <button id="tabInput" class="aktif" onclick="showTab('input')">✏️ Input Nilai</button>
+  <button id="tabRekap" onclick="showTab('rekap')">📊 Rekap per Munaqisy</button>
+</div>
+
+<!-- TAB INPUT -->
+<div id="viewInput">
+<div class="layout">
+  <div class="kiri">
+    <div class="card">
+      <label>BIDANG MUNAQOSYAH</label>
+      <select id="bidang" onchange="onBidang()">
+        <option value="">-- Pilih Bidang --</option>
+        <option value="Al Qur'an">Al Qur'an</option>
+        <option value="Teori Tajwid">Teori Tajwid</option>
+        <option value="Teori Ghorib">Teori Ghorib</option>
+        <option value="Surat Pendek">Surat Pendek</option>
+        <option value="Ayat Pilihan">Ayat Pilihan</option>
+      </select>
     </div>
-    <div class="card"><label>Bidang Munaqosyah</label>
-      <select id="bidang"><option value="">-- Pilih Bidang --</option>
-        <option>Al Qur'an</option><option>Teori Tajwid</option><option>Teori Ghorib</option><option>Surat Pendek</option><option>Ayat Pilihan</option>
-      </select></div>
-    <div class="card"><label>Ruang</label>
-      <select id="ruang"><option value="">-- Pilih Ruang --</option></select></div>
+    <div class="card">
+      <label>RUANG</label>
+      <select id="ruang" onchange="onRuang()" disabled><option value="">-- Pilih Bidang Dulu --</option></select>
+      <small id="infoRuang">Al Qur'an: Ruang 1 (1-89) • Ruang 2 (90-178) • Ruang 3 (179-266)<br>Lainnya: Ruang 1 (1-133) • Ruang 2 (134-266)</small>
+    </div>
+    <div class="card">
+      <label>MUNAQISY</label>
+      <select id="munaqisy" onchange="onMunaqisy()" disabled><option value="">-- Pilih Ruang Dulu --</option></select>
+    </div>
+    <div class="info" id="infoPeserta">Pilih Bidang → Ruang → Munaqisy dulu untuk menampilkan santri.</div>
+    <div class="card">
+      <label>FILTER</label>
+      <select id="filter" onchange="renderTabel()"><option value="semua">Semua Santri</option><option value="belum">Belum Diisi / Belum Lengkap</option><option value="sudah">Sudah Lengkap</option></select>
+    </div>
   </div>
 
-  <div class="filter-box" id="filterBox" style="display:none">
-    <button id="btnSemua" class="active" onclick="setFilter('semua')">Semua</button>
-    <button id="btnKosong" onclick="setFilter('kosong')">Yang Belum Dinilai Saja</button>
-    <button id="btnSaya" onclick="setFilter('saya')">Yang Sudah Saya Nilai</button>
-    <span style="align-self:center;color:#64748b;font-size:14px" id="infoFilter"></span>
-  </div>
-
-  <div class="bar-atas">
-  <div class="toolbar" id="toolbar" style="display:none">
-    <input id="cari" placeholder="🔍 Cari nama / nomor peserta..." oninput="renderTabel(false)">
-    <button onclick="renderTabel(true)">🔄 Refresh</button>
-  </div>
-
-  <div class="actions" id="actions" style="display:none">
-    <button class="btn-draft" onclick="simpan(false)">Simpan Dulu</button>
-    <button class="btn-save" onclick="simpan(true)">✓ Simpan Final</button>
+  <div class="kanan">
+    <div class="bar">
+      <input id="cari" placeholder="Cari nama / nomor santri..." oninput="renderTabel()" disabled>
+      <div class="mode"><button id="btnInput" class="aktif" onclick="setMode('input')">✏️ Input</button><button id="btnBaca" onclick="setMode('baca')">👁️ Baca</button></div>
+      <button class="btn" onclick="resetAll()">🔄 Refresh</button>
+    </div>
+    <div id="errBox" class="err-box"></div>
+    <div class="tabel-wrap"><div id="tabelArea"><div class="kosong">Pilih Bidang → Ruang → Munaqisy dulu</div></div></div>
+    <!-- TOMBOL PROPORSIONAL, TIDAK MENUHI HALAMAN -->
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap">
+      <span id="progress" class="total" style="margin-right:auto;align-self:center"></span>
+      <button class="btn" id="btnSimpanSebagian" onclick="simpan(false)" disabled>💾 Simpan yang Terisi</button>
+      <button class="btn btn-hijau" id="btnSimpanSemua" onclick="simpan(true)" disabled>✅ Simpan Semua</button>
+    </div>
   </div>
 </div>
-
-  <div class="msg-error" id="msgError"></div>
-  <div id="tabelWrap"></div>
-
 </div>
-<div class="overlay" id="overlay"><div class="popup"><div style="font-size:48px">🎉</div><h3 id="popupJudul">Berhasil!</h3><p id="popupIsi" style="color:#64748b"></p><button onclick="tutupPopup()">Oke</button></div></div>
+
+<!-- TAB REKAP -->
+<div id="viewRekap">
+  <div class="card">
+    <label>FILTER REKAP</label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select id="rekapBidang" onchange="renderRekap()" style="flex:1;padding:10px;border-radius:10px;border:1px solid #CBD5E1"><option value="">Semua Bidang</option><option>Al Qur'an</option><option>Teori Tajwid</option><option>Teori Ghorib</option><option>Surat Pendek</option><option>Ayat Pilihan</option></select>
+      <select id="rekapMunaqisy" onchange="renderRekap()" style="flex:1;padding:10px;border-radius:10px;border:1px solid #CBD5E1"><option value="">Semua Munaqisy</option></select>
+      <button class="btn btn-hijau" onclick="loadRekap()">🔄 Muat Rekap</button>
+    </div>
+  </div>
+  <div class="tabel-wrap" style="max-height:none"><div id="rekapArea"><div class="kosong">Klik Muat Rekap</div></div></div>
+</div>
+
+<!-- POPUP -->
+<div class="overlay" id="overlay"><div class="popup"><div class="icon">🤲</div><h3>Alhamdulillaah</h3><p id="popupText">Nilai berhasil disimpan</p><button onclick="tutupPopup()">Baik, Lanjutkan</button></div></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrLaCmxZL7grWTMOKa5X_EHbIuzmq_35n4RTJMusBiwNH07qAqRltsl7L-ryQas4d9/exec";
+// ===== CONFIG - GANTI URL INI SETELAH DEPLOY APPS SCRIPT =====
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtbkoG9g0FzCMNIfMGwnkvTxMpGDhvNI2Z-X0b9NrYl8n3i3phtChL4HxW_ZIV6r-L/exec";
 
-// ⬇️ UBAH DAFTAR PENGUJI DI SINI SAJA ⬇️
-const DAFTAR_PENGUJI = [
-"Andik Purwanto",
-"Khozinatul Asror",
-"Moh. Mahfud",
-"Moh. Nasrulloh Al-Hariisi",
-"Nurul Huda",
-"Chisna Baroroh",
-"Imroatus Safaroh",
-"Mar'atul Khoir",
-"Ni'matul Kholis",
-"Sih Tri Lulus",
-"Agus Mabrur",
-"Ahmad Hasyim Asy'ari",
-"Aqibatul Afwa Hidayatullah",
-"Anik Setiyowati",
-"Muhammad Shobir Abdulloh",
-"Nor Chamid",
-"Atik Muhimmataz Zahro'",
-"Mujiati",
-"Ahmad Nafiul Anam",
-"Alimin",
-"Poeji Astutik",
-"Rina Astiani",
-"Moh. Ahlisil Haq",
-"Siswanto",
-"Ilya Munhamirotul Fauziyah",
-"Siti Rodliyah",
-];
-// ⬆️ SAMPAI SINI SAJA ⬆️
-
-let DATA_SISWA = [];
-let DATA_TERSIMPAN = {};
-let FILTER = 'semua';
-const KOLOM_5 = [
-  {key:'kelulusan',label:'Kelulusan',min:0,max:6},
-  {key:'fashohah',label:'Fashohah',min:0,max:28},
-  {key:'tajwid',label:'Tajwid',min:0,max:45},
-  {key:'ghorib',label:'Ghorib',min:0,max:10},
-  {key:'suara',label:'Suara & Lagu',min:0,max:7},
-];
-function getKolom(b){ return b==="Al Qur'an" ? KOLOM_5 : [{key:'nilai',label:b,min:0,max:90}]; }
-function getRuang(b){ return b==="Al Qur'an" ? [1,2,3] : [1,2]; }
-function filterPeserta(bidang,ruang){
+// ===== DATA MASTER =====
+const DATA_RUANG = {
+  "Al Qur'an": ["Ruang 1","Ruang 2","Ruang 3"],
+  "Teori Tajwid": ["Ruang 1","Ruang 2"],
+  "Teori Ghorib": ["Ruang 1","Ruang 2"],
+  "Surat Pendek": ["Ruang 1","Ruang 2"],
+  "Ayat Pilihan": ["Ruang 1","Ruang 2"]
+};
+// Pembagian santri per ruang
+function getRange(bidang, ruang){
   if(bidang==="Al Qur'an"){
-    if(ruang==1) return DATA_SISWA.filter(s=>s.no>=1&&s.no<=89);
-    if(ruang==2) return DATA_SISWA.filter(s=>s.no>=90&&s.no<=178);
-    if(ruang==3) return DATA_SISWA.filter(s=>s.no>=179&&s.no<=266);
-  } else {
-    if(ruang==1) return DATA_SISWA.filter(s=>s.no>=1&&s.no<=133);
-    if(ruang==2) return DATA_SISWA.filter(s=>s.no>=134&&s.no<=266);
+    if(ruang==="Ruang 1") return [1,89];
+    if(ruang==="Ruang 2") return [90,178];
+    return [179,266];
   }
-  return [];
+  if(ruang==="Ruang 1") return [1,133];
+  return [134,266];
 }
-function getPenguji(){ return document.getElementById('penguji').value; }
-const pengujiEl=document.getElementById('penguji'), bidangEl=document.getElementById('bidang'), ruangEl=document.getElementById('ruang');
-DAFTAR_PENGUJI.forEach(n=>{ pengujiEl.innerHTML+=`<option value="${n}">${n}</option>`; });
+// Munaqisy per Bidang+Ruang - total 25 orang
+const DATA_MUNAQISY = {
+  "Al Qur'an|Ruang 1": ["Andik Purwanto","Khozinatul Asror","Moh. Nasrulloh Al-Hariisi","Nurul Huda"],
+  "Al Qur'an|Ruang 2": ["Moh. Mahfud","Imroatus Safaroh","Mar'atul Khoir"],
+  "Al Qur'an|Ruang 3": ["Chisna Baroroh","Ni'matul Kholis","Sih Tri Lulus"],
+  "Teori Tajwid|Ruang 1": ["Siswanto","Ilya Munhamirotul Fauziyah"],
+  "Teori Tajwid|Ruang 2": ["Moh. Ahlisil Haq","Siti Rodliyah"],
+  "Teori Ghorib|Ruang 1": ["Atik Muhimmataz Zahro'","Nor Chamid"],
+  "Teori Ghorib|Ruang 2": ["Muhammad Shobir Abdulloh","Mujiati"],
+  "Surat Pendek|Ruang 1": ["Ahmad Nafiul Anam","Alimin"],
+  "Surat Pendek|Ruang 2": ["Poeji Astutik","Rina Astiani"],
+  "Ayat Pilihan|Ruang 1": ["Ahmad Hasyim Asy'ari","Aqibatul Afwa Hidayatullah"],
+  "Ayat Pilihan|Ruang 2": ["Agus Mabrur","Anik Setiyowati"]
+};
+// Batas nilai
+const BATAS = {
+  "Al Qur'an": [
+    {key:"kelulusan", label:"Kelulusan", min:0, max:6},
+    {key:"fashohah", label:"Fashohah", min:0, max:28},
+    {key:"tajwid", label:"Tajwid", min:0, max:45},
+    {key:"ghorib", label:"Ghorib", min:0, max:10},
+    {key:"suara", label:"Suara & Lagu", min:0, max:7}
+  ],
+  "Teori Tajwid": [{key:"nilai", label:"Nilai Teori Tajwid", min:0, max:90}],
+  "Teori Ghorib": [{key:"nilai", label:"Nilai Teori Ghorib", min:0, max:90}],
+  "Surat Pendek": [{key:"nilai", label:"Nilai Surat Pendek", min:0, max:90}],
+  "Ayat Pilihan": [{key:"nilai", label:"Nilai Ayat Pilihan", min:0, max:90}]
+};
+// Daftar santri 1-266 - GANTI dengan fetch GSheet kalau sudah ada nama asli
+// Format: {no:1, nama:"..."}
+// GANTI JADI INI:
+let ALL_SANTRI = [];
 
-async function loadPeserta(){
-  try{ const res=await fetch(SCRIPT_URL+"?action=getPeserta"); const j=await res.json(); DATA_SISWA=j.peserta||[]; }catch(e){ console.log(e); }
-}
-loadPeserta();
-
-function setFilter(f){
-  FILTER=f;
-  document.getElementById('btnSemua').classList.toggle('active', f==='semua');
-  document.getElementById('btnKosong').classList.toggle('active', f==='kosong');
-  document.getElementById('btnSaya').classList.toggle('active', f==='saya');
-  renderTabel(false);
-}
-pengujiEl.addEventListener('change', ()=>{ if(bidangEl.value && ruangEl.value) renderTabel(true); });
-bidangEl.addEventListener('change',()=>{
-  const b=bidangEl.value; ruangEl.innerHTML='<option value="">-- Pilih Ruang --</option>';
-  if(!b) return;
-  getRuang(b).forEach(r=> ruangEl.innerHTML+=`<option value="${r}">${b==="Al Qur'an" ? `Al Qur'an ${r}` : `Ruang ${r}`}</option>`);
-  document.getElementById('tabelWrap').innerHTML=''; document.getElementById('actions').style.display='none';
-  document.getElementById('toolbar').style.display='none'; document.getElementById('filterBox').style.display='none';
-});
-ruangEl.addEventListener('change', ()=>renderTabel(true));
-
-async function renderTabel(refreshDariServer=true){
-  const bidang=bidangEl.value, ruang=ruangEl.value; if(!bidang||!ruang) return;
-  if(refreshDariServer){
-    document.getElementById('tabelWrap').innerHTML='<div class="loading">⏳ Memuat...</div>';
-    const r1=await fetch(`${SCRIPT_URL}?action=getNilai&bidang=${encodeURIComponent(bidang)}&ruang=${ruang}`).then(r=>r.json());
-    DATA_TERSIMPAN=r1.nilai||{};
-  }
-  const cari=(document.getElementById('cari').value||"").toLowerCase();
-  let peserta=filterPeserta(bidang,parseInt(ruang));
-  const saya=getPenguji();
-  const kolom=getKolom(bidang);
-
-  // Filter tombol
-  if(FILTER==='kosong') peserta=peserta.filter(s=> {
-    const v=DATA_TERSIMPAN[String(s.no)];
-    return !v || kolom.every(k=> v[k.key]==="" || v[k.key]==null || v[k.key]===undefined);
-  });
-  if(FILTER==='saya') peserta=peserta.filter(s=> {
-    const v=DATA_TERSIMPAN[String(s.no)];
-    return v && v.penguji===saya;
-  });
-  if(cari) peserta=peserta.filter(s=> s.nama.toLowerCase().includes(cari) || String(s.no).includes(cari));
-
-  const totalDiRuang = filterPeserta(bidang,parseInt(ruang)).length;
-  const sudahDinilai = filterPeserta(bidang,parseInt(ruang)).filter(s=>{
-    const v=DATA_TERSIMPAN[String(s.no)];
-    return v && kolom.some(k=> v[k.key]!=="" && v[k.key]!=null);
-  }).length;
-  document.getElementById('infoFilter').textContent = `Menampilkan ${peserta.length} dari ${totalDiRuang} • Sudah dinilai: ${sudahDinilai} • Belum: ${totalDiRuang - sudahDinilai}`;
-
-  let html=`<table><thead><tr><th>No</th><th>Nama</th>`;
-  kolom.forEach(k=> html+=`<th>${k.label}<br><small>(${k.min}-${k.max})</small></th>`);
-  html+=`</tr></thead><tbody>`;
-  peserta.forEach(s=>{
-    const val=DATA_TERSIMPAN[String(s.no)]||{};
-    const sudahAda = kolom.some(k=> val[k.key]!=="" && val[k.key]!=null && val[k.key]!==undefined);
-    const milikOrang = sudahAda && val.penguji && val.penguji!==saya;
-    const milikSaya = sudahAda && val.penguji===saya;
-
-    html+=`<tr><td>${s.no}</td><td class="nama">${s.nama}<br>`;
-    if(milikSaya) html+=`<small style="color:#16a34a">✅ Sudah kamu nilai (${val.status||'Draft'}) - bisa diedit</small>`;
-    else if(milikOrang) html+=`<small style="color:#ef4444">🔒 Sudah dinilai oleh ${val.penguji} - jangan diisi lagi</small>`;
-    else html+=`<small style="color:#94a3b8">Belum dinilai</small>`;
-    html+=`</td>`;
-    kolom.forEach(k=>{
-      let v = val[k.key]!==undefined && val[k.key]!=="" ? val[k.key] : '';
-      const elLama=document.querySelector(`input.nilai[data-no="${s.no}"][data-key="${k.key}"]`);
-      if(elLama && elLama.value!=="") v=elLama.value;
-      // Kalau sudah dinilai orang lain, kunci biar tidak ketimpa
-      const dis = milikOrang ? "disabled" : "";
-      html+=`<td><input class="nilai" data-no="${s.no}" data-key="${k.key}" data-min="${k.min}" data-max="${k.max}" value="${v}" type="number" ${dis} oninput="cekInput(this)"></td>`;
-    });
-    html+=`</tr>`;
-  });
-  html+=`</tbody></table>`;
-  if(!peserta.length) html=`<p style="text-align:center;color:#64748b;background:#fff;padding:20px;border-radius:12px">Tidak ada peserta di filter ini.</p>`;
-  document.getElementById('tabelWrap').innerHTML=html;
-  document.getElementById('actions').style.display='flex';
-  document.getElementById('toolbar').style.display='flex';
-  document.getElementById('filterBox').style.display='flex';
-  document.querySelectorAll('input.nilai').forEach(el=>cekInput(el));
-}
-function cekInput(el){
-  const v=el.value.trim(), min=+el.dataset.min, max=+el.dataset.max;
-  el.classList.remove('error','filled');
-  if(v==='') return;
-  const n=Number(v);
-  if(isNaN(n)||n<min||n>max) el.classList.add('error'); else el.classList.add('filled');
-}
-
-async function simpan(isFinal){
-  const bidang=bidangEl.value, ruang=ruangEl.value, kolom=getKolom(bidang);
-  const penguji=getPenguji(); if(!penguji) return alert("Pilih Nama Penguji dulu!");
-  // Ambil hanya yang diisi & tidak terkunci (milik orang lain tidak ikut)
-  const inputs=[...document.querySelectorAll('input.nilai:not(:disabled)')];
-  let rowsMap={}, salah=[];
-  inputs.forEach(el=>{
-    const v=el.value.trim();
-    if(v==='') return; // yang kosong dilewati, tidak nimpa nilai orang lain
-    const n=Number(v);
-    if(n<+el.dataset.min||n>+el.dataset.max){ el.classList.add('error'); salah.push(`No ${el.dataset.no} harus ${el.dataset.min}-${el.dataset.max}`); return; }
-    const no=el.dataset.no;
-    if(!rowsMap[no]) rowsMap[no]={bidang, ruang, no, nama: DATA_SISWA.find(s=>String(s.no)===String(no))?.nama||"", status: isFinal?"Final":"Draft", penguji};
-    rowsMap[no][el.dataset.key]=n;
-  });
-  // Kalau Final, cek yang diisi harus lengkap per santri
-  if(isFinal){
-    let tidakLengkap=[];
-    Object.values(rowsMap).forEach(r=>{
-      if(!kolom.every(k=> r[k.key]!=="" && r[k.key]!==undefined)) tidakLengkap.push(r.no);
-    });
-    if(tidakLengkap.length){
-      const box=document.getElementById('msgError');
-      box.innerHTML=`<b>Belum bisa Simpan Final!</b><br>Santri ini nilainya belum lengkap, lengkapi dulu atau pakai Simpan Sementara: No ${tidakLengkap.join(', ')}`;
-      box.classList.add('show'); return;
-    }
-  }
-  if(salah.length){ const box=document.getElementById('msgError'); box.innerHTML=`<b>Nilai di luar batas!</b><br>${salah.join('<br>')}`; box.classList.add('show'); return; }
-  document.getElementById('msgError').classList.remove('show');
-  const rows=Object.values(rowsMap);
-  if(!rows.length){ alert("Belum ada yang diisi! Isi dulu santri yang Panjenengan uji."); return; }
-  document.getElementById('popupJudul').textContent="⏳ Menyimpan...";
-  document.getElementById('popupIsi').textContent=`Menyimpan ${rows.length} santri...`;
-  document.getElementById('overlay').classList.add('show');
+async function loadSantri(){
   try{
-    await fetch(SCRIPT_URL,{method:'POST', body: JSON.stringify({rows})});
-    document.getElementById('popupJudul').textContent = isFinal ? 'Berhasil Disimpan Final! 🎉' : 'Berhasil Disimpan! 💾';
-    document.getElementById('popupIsi').textContent = isFinal ? `Nilai ${rows.length} santri sudah final.` : `Tersimpan. Yang kosong tidak ikut tersimpan, aman.`;
+    const res = await fetch(`${APPS_SCRIPT_URL}?action=santri`);
+    const j = await res.json();
+    if(j.ok && j.santri.length > 0){
+      ALL_SANTRI = j.santri;
+      console.log('Santri loaded:', ALL_SANTRI.length);
+    }
   }catch(e){
-    document.getElementById('popupJudul').textContent="Gagal Menyimpan";
-    document.getElementById('popupIsi').textContent="Cek internet / URL Apps Script.";
+    console.log('Gagal load santri, pakai data darurat', e);
+    // Fallback kalau GSheet belum kebuka, biar web tidak kosong
+    for(let i=1;i<=266;i++){ ALL_SANTRI.push({no:i, nama:"Santri "+String(i).padStart(3,'0')}); }
+  }
+  // Setelah santri ke-load, baru render kalau sudah pilih munaqisy
+  if(document.getElementById('munaqisy').value) renderTabel();
+}
+// Panggil saat halaman dibuka
+loadSantri();
+
+let nilaiData = {}; // { "no": {kelulusan:..., fashohah:...} }
+let mode = 'input';
+let rekapData = [];
+
+function isiSelect(id, list, ph){
+  document.getElementById(id).innerHTML = `<option value="">${ph}</option>` + list.map(x=>`<option value="${x}">${x}</option>`).join('');
+}
+function onBidang(){
+  const b = document.getElementById('bidang').value;
+  isiSelect('ruang', [], '-- Pilih Bidang Dulu --');
+  isiSelect('munaqisy', [], '-- Pilih Ruang Dulu --');
+  document.getElementById('ruang').disabled = !b;
+  document.getElementById('munaqisy').disabled = true;
+  document.getElementById('tabelArea').innerHTML = '<div class="kosong">Pilih Ruang dulu</div>';
+  if(!b) return;
+  isiSelect('ruang', DATA_RUANG[b], '-- Pilih Ruang --');
+}
+function onRuang(){
+  const b = document.getElementById('bidang').value;
+  const r = document.getElementById('ruang').value;
+  isiSelect('munaqisy', [], '-- Pilih Ruang Dulu --');
+  document.getElementById('munaqisy').disabled = true;
+  document.getElementById('tabelArea').innerHTML = '<div class="kosong">Pilih Munaqisy dulu</div>';
+  if(!r) return;
+  isiSelect('munaqisy', DATA_MUNAQISY[b+'|'+r] || [], '-- Pilih Munaqisy --');
+  document.getElementById('munaqisy').disabled = false;
+  const [a,z] = getRange(b,r);
+  document.getElementById('infoRuang').innerText = `${b} - ${r} : Santri No ${a} - ${z} (${z-a+1} santri)`;
+}
+function onMunaqisy(){
+  const m = document.getElementById('munaqisy').value;
+  if(!m) return;
+  document.getElementById('cari').disabled = false;
+  document.getElementById('btnSimpanSebagian').disabled = false;
+  document.getElementById('btnSimpanSemua').disabled = false;
+  nilaiData = {};
+  loadNilaiTersimpan();
+  renderTabel();
+}
+function getSantriFiltered(){
+  const b = document.getElementById('bidang').value;
+  const r = document.getElementById('ruang').value;
+  const [a,z] = getRange(b,r);
+  let list = ALL_SANTRI.filter(s=>s.no>=a && s.no<=z);
+  const cari = document.getElementById('cari').value.toLowerCase();
+  if(cari) list = list.filter(s=> s.nama.toLowerCase().includes(cari) || String(s.no).includes(cari));
+  const f = document.getElementById('filter').value;
+  if(f!=='semua'){
+    list = list.filter(s=>{
+      const lengkap = isLengkap(s.no);
+      return f==='sudah' ? lengkap : !lengkap;
+    });
+  }
+  return list;
+}
+function isLengkap(no){
+  const b = document.getElementById('bidang').value;
+  const cols = BATAS[b];
+  const d = nilaiData[no] || {};
+  return cols.every(c=> d[c.key]!==undefined && d[c.key]!=='' && d[c.key]!==null);
+}
+function setMode(m){
+  mode=m;
+  document.body.classList.toggle('baca', m==='baca');
+  document.getElementById('btnInput').classList.toggle('aktif', m==='input');
+  document.getElementById('btnBaca').classList.toggle('aktif', m==='baca');
+  renderTabel();
+}
+function renderTabel(){
+  const b = document.getElementById('bidang').value;
+  const r = document.getElementById('ruang').value;
+  const m = document.getElementById('munaqisy').value;
+  if(!b||!r||!m) return;
+  const cols = BATAS[b];
+  const list = getSantriFiltered();
+  document.getElementById('infoPeserta').innerHTML = `<b>${b} • ${r} • ${m}</b><br>${list.length} santri ditampilkan`;
+  let totalLengkap = ALL_SANTRI.filter(s=>{ const [a,z]=getRange(b,r); return s.no>=a&&s.no<=z && isLengkap(s.no)}).length;
+  const [a,z]=getRange(b,r);
+  document.getElementById('progress').innerText = `Progress: ${totalLengkap} / ${z-a+1} sudah lengkap`;
+  if(list.length===0){ document.getElementById('tabelArea').innerHTML='<div class="kosong">Tidak ada santri</div>'; return; }
+  let head = `<table><thead><tr><th style="position:sticky;left:0">No</th><th>Nama Santri</th>`;
+  cols.forEach(c=> head+=`<th>${c.label}<br><small style="font-weight:400;opacity:.8">${c.min}-${c.max}</small></th>`);
+  head+=`<th>Total</th><th>Status</th></tr></thead><tbody>`;
+  let body='';
+  list.forEach(s=>{
+    const d = nilaiData[s.no]||{};
+    let total = 0, ada=false;
+    cols.forEach(c=>{ if(d[c.key]!==undefined&&d[c.key]!==''){ total+=Number(d[c.key]); ada=true; } });
+    let inputs='';
+    cols.forEach(c=>{
+      const v = d[c.key] ?? '';
+      inputs += `<td>${mode==='baca' ? `<b>${v===''?'—':v}</b>` : `<input type="number" min="${c.min}" max="${c.max}" value="${v}" data-no="${s.no}" data-key="${c.key}" oninput="onInput(this)" placeholder="${c.min}-${c.max}">`}</td>`;
+    });
+    body+=`<tr><td><b>${s.no}</b></td><td>${s.nama}</td>${inputs}<td><b>${ada?total:'—'}</b></td><td>${isLengkap(s.no)?'<span class="badge badge-ok">Lengkap</span>':'<span class="badge badge-no">Belum</span>'}</td></tr>`;
+  });
+  document.getElementById('tabelArea').innerHTML = head+body+'</tbody></table>';
+}
+function onInput(el){
+  const no = el.dataset.no, key = el.dataset.key;
+  const b = document.getElementById('bidang').value;
+  const col = BATAS[b].find(c=>c.key===key);
+  const v = el.value;
+  if(!nilaiData[no]) nilaiData[no]={};
+  if(v===''){ delete nilaiData[no][key]; el.classList.remove('err','ok'); return; }
+  const num = Number(v);
+  if(num < col.min || num > col.max){
+    el.classList.add('err'); el.classList.remove('ok');
+  } else {
+    el.classList.remove('err'); el.classList.add('ok');
+    nilaiData[no][key]=num;
   }
 }
-function tutupPopup(){ document.getElementById('overlay').classList.remove('show'); if(document.getElementById('popupJudul').textContent.includes('Berhasil')) renderTabel(true); }
+function validate(simpanSemua){
+  const b = document.getElementById('bidang').value;
+  const cols = BATAS[b];
+  const list = getSantriFiltered();
+  let errKosong=[], errRange=[];
+  // Cek yang terisi tapi di luar batas + yang kosong kalau simpan semua
+  document.querySelectorAll('#tabelArea input').forEach(inp=>{
+    const no = inp.dataset.no, key = inp.dataset.key;
+    const col = cols.find(c=>c.key===key);
+    const v = inp.value;
+    inp.classList.remove('err');
+    if(v!=='' && (Number(v) < col.min || Number(v) > col.max)){
+      inp.classList.add('err'); errRange.push(`No ${no} - ${col.label}: ${v} (harus ${col.min}-${col.max})`);
+    }
+    if(simpanSemua && v===''){
+      inp.classList.add('err'); errKosong.push(`No ${no} - ${col.label}`);
+    }
+  });
+  const box = document.getElementById('errBox');
+  if(errRange.length || errKosong.length){
+    let html='';
+    if(errRange.length) html+=`⚠️ <b>Nilai di luar batas:</b><br>${errRange.slice(0,5).join('<br>')}${errRange.length>5?`<br>+ ${errRange.length-5} lagi...`:''}<br>`;
+    if(errKosong.length) html+=`🔴 <b>Masih kosong (${errKosong.length}):</b><br>${errKosong.slice(0,8).join(', ')}${errKosong.length>8?' ...':''}<br>Yang merah di atas wajib diisi kalau Simpan Semua. Kalau mau kirim separo, pakai tombol <b>Simpan yang Terisi</b>.`;
+    box.innerHTML=html; box.classList.add('show');
+    // Scroll ke input merah pertama
+    const firstErr = document.querySelector('#tabelArea input.err');
+    if(firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+    return false;
+  }
+  box.classList.remove('show');
+  return true;
+}
+async function simpan(simpanSemua){
+  if(!validate(simpanSemua)) return;
+  const b = document.getElementById('bidang').value;
+  const r = document.getElementById('ruang').value;
+  const m = document.getElementById('munaqisy').value;
+  const cols = BATAS[b];
+  // Kumpulkan hanya yang ada isinya (bisa separo)
+  let rows=[];
+  Object.keys(nilaiData).forEach(no=>{
+    const d = nilaiData[no];
+    const lengkap = cols.every(c=> d[c.key]!==undefined && d[c.key]!=='');
+    if(!simpanSemua && !lengkap){
+      // Simpan separo: tetap kirim yang terisi, tapi tandai belum lengkap
+    }
+    if(Object.keys(d).length===0) return;
+    let obj = {no:Number(no), nama: ALL_SANTRI.find(s=>s.no==no)?.nama||'', bidang:b, ruang:r, munaqisy:m, lengkap: lengkap?'Lengkap':'Sebagian'};
+    cols.forEach(c=> obj[c.key]= d[c.key] ?? '');
+    // total
+    obj.total = cols.reduce((sum,c)=> sum + (Number(d[c.key])||0),0);
+    rows.push(obj);
+  });
+  if(rows.length===0){ alert('Belum ada nilai yang diisi'); return; }
+  // Kirim ke Apps Script - tanpa bentrok karena pakai LockService di server
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {method:'POST', body: JSON.stringify({action:'save', rows})});
+    const j = await res.json();
+    if(j.ok){
+      document.getElementById('popupText').innerHTML = `Alhamdulillaah, nilai berhasil disimpan.<br><b>${rows.length} santri</b> • ${b} • ${r} • ${m}`;
+      document.getElementById('overlay').classList.add('show');
+      loadRekap();
+    } else {
+      alert('Gagal simpan: '+j.msg);
+    }
+  }catch(e){
+    // Fallback kalau belum setting Apps Script: simpan lokal dulu
+    localStorage.setItem('nilai_'+b+'_'+r+'_'+m, JSON.stringify(nilaiData));
+    document.getElementById('popupText').innerHTML = `Alhamdulillaah, nilai berhasil disimpan (lokal, belum ke GSheet karena URL Apps Script belum diisi).<br><b>${rows.length} santri</b>`;
+    document.getElementById('overlay').classList.add('show');
+  }
+}
+function tutupPopup(){ document.getElementById('overlay').classList.remove('show'); }
+function resetAll(){
+  document.getElementById('bidang').value=''; document.getElementById('cari').value='';
+  onBidang(); document.getElementById('tabelArea').innerHTML='<div class="kosong">Pilih Bidang → Ruang → Munaqisy dulu</div>';
+}
+async function loadNilaiTersimpan(){
+  const b=document.getElementById('bidang').value, r=document.getElementById('ruang').value, m=document.getElementById('munaqisy').value;
+  // 1. Coba dari GSheet
+  try{
+    const res = await fetch(`${APPS_SCRIPT_URL}?action=get&bidang=${encodeURIComponent(b)}&ruang=${encodeURIComponent(r)}&munaqisy=${encodeURIComponent(m)}`);
+    const j = await res.json();
+    if(j.ok && j.rows){ j.rows.forEach(row=>{ nilaiData[row.no]={}; BATAS[b].forEach(c=>{ if(row[c.key]!==''&&row[c.key]!=null) nilaiData[row.no][c.key]=Number(row[c.key]); }); }); renderTabel(); return; }
+  }catch(e){}
+  // 2. Fallback local
+  const local = localStorage.getItem('nilai_'+b+'_'+r+'_'+m);
+  if(local) nilaiData = JSON.parse(local);
+  renderTabel();
+}
+function showTab(t){
+  document.getElementById('viewInput').style.display = t==='input'?'block':'none';
+  document.getElementById('viewRekap').style.display = t==='rekap'?'block':'none';
+  document.getElementById('tabInput').classList.toggle('aktif', t==='input');
+  document.getElementById('tabRekap').classList.toggle('aktif', t==='rekap');
+  if(t==='rekap') loadRekap();
+}
+// ===== REKAP: 1 BARIS = 1 MUNAQISY x 1 BIDANG =====
+async function loadRekap(){
+  // Isi dropdown munaqisy rekap
+  const allM = Object.values(DATA_MUNAQISY).flat();
+  const uniq = [...new Set(allM)].sort();
+  isiSelect('rekapMunaqisy', uniq, 'Semua Munaqisy');
+  try{
+    const res = await fetch(`${APPS_SCRIPT_URL}?action=rekap`);
+    const j = await res.json();
+    if(j.ok) rekapData = j.rekap;
+  }catch(e){
+    // Fallback: rekap dari localStorage kalau belum ada Apps Script
+    rekapData = [];
+    Object.keys(localStorage).forEach(k=>{
+      if(k.startsWith('nilai_')){
+        const parts = k.replace('nilai_','').split('_');
+        // contoh key: nilai_Al Qur'an_Ruang 1_Andik...
+        // Sederhanakan: hitung dari nilaiData lokal
+      }
+    });
+  }
+  renderRekap();
+}
+function renderRekap(){
+  const fb = document.getElementById('rekapBidang').value;
+  const fm = document.getElementById('rekapMunaqisy').value;
+  let list = rekapData.filter(x=> (!fb||x.bidang===fb) && (!fm||x.munaqisy===fm));
+  if(list.length===0){ document.getElementById('rekapArea').innerHTML='<div class="kosong">Belum ada rekap. Isi nilai & Simpan dulu.</div>'; return; }
+  let html=`<table><thead><tr><th>Munaqisy</th><th>Bidang</th><th>Ruang</th><th>Sudah Dinilai</th><th>Total Santri di Ruang</th><th>Progress</th><th>Rata-rata</th></tr></thead><tbody>`;
+  list.forEach(x=>{
+    const pct = Math.round((x.sudah/x.totalRuang)*100);
+    html+=`<tr><td><b>${x.munaqisy}</b></td><td>${x.bidang}</td><td>${x.ruang}</td><td>${x.sudah}</td><td>${x.totalRuang}</td><td><div style="background:#E2E8F0;border-radius:99px;height:10px;width:100px"><div style="background:#0F766E;height:10px;width:${pct}%;border-radius:99px"></div></div> ${pct}%</td><td><b>${x.rata||'-'}</b></td></tr>`;
+  });
+  document.getElementById('rekapArea').innerHTML = html+'</tbody></table>';
+}
+// Init dropdown rekap
+(function(){ const allM = Object.values(DATA_MUNAQISY).flat(); isiSelect('rekapMunaqisy', [...new Set(allM)].sort(), 'Semua Munaqisy'); })();
 </script>
 </body>
 </html>
