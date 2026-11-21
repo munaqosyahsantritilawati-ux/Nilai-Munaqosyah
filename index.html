@@ -1,226 +1,440 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Rekap Nilai - Pilih Bidang</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Munaqosyah 2026</title>
 <style>
-  *{box-sizing:border-box; font-family:system-ui, sans-serif;}
-  body{margin:0; background:#f2f4f7; padding:16px;}
-  .card{background:white; max-width:720px; margin:0 auto; padding:20px; border-radius:18px; box-shadow:0 4px 16px rgba(0,0,0,0.08);}
-  h2{margin:0 0 4px; text-align:center;}
-  .sub{text-align:center; color:#666; font-size:13px; margin-bottom:16px;}
-  label{font-weight:700; font-size:14px;}
-  select, input[type="number"]{width:100%; padding:12px; border:1px solid #ddd; border-radius:12px; font-size:15px;}
-  select{margin:8px 0 16px;}
-  table{width:100%; border-collapse:collapse; font-size:14px;}
-  th{padding:10px 8px; border:1px solid #ddd; background:#f5f5f5; text-align:center;}
-  th.nama, td.nama{text-align:left;}
-  td{padding:6px; border:1px solid #eee; vertical-align:middle;}
-  td.no{text-align:center; width:40px;}
-  #btnKirim{display:none; width:100%; padding:14px; background:#1a7f4b; color:white; border:none; border-radius:12px; font-weight:700; font-size:15px; margin-top:16px; cursor:pointer;}
-  #btnKirim:disabled{opacity:0.6;}
-  .info{font-size:13px; color:#666; text-align:center; margin-top:10px;}
-  .loading{text-align:center; color:#666; padding:20px;}
+  *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+  body{background:#f1f5f9;margin:0;padding:16px;color:#1e293b}
+  .wrap{max-width:900px;margin:auto}
+  h1{text-align:center;color:#0f766e;margin:8px 0 4px}
+  p.sub{text-align:center;color:#64748b;margin:0 0 16px}
+  .identitas{display:flex;gap:12px;flex-wrap:wrap}
+  .identitas .card{flex:1;min-width:260px;background:#fff;padding:16px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  label{font-weight:700;font-size:13px;display:block;margin-bottom:6px}
+  select,input{width:100%;padding:11px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px;outline:none;background:#fff}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .toolbar input{flex:1;min-width:200px}
+  .toolbar button{padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;font-weight:700;cursor:pointer}
+  table{width:100%;border-collapse:collapse;background:#fff;margin-top:12px;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+ /* === HEADER TABEL NEMPEL - VERSI FINAL === */
+#tabelWrap{
+  height: 75vh; /* tinggi kotaknya, sisanya di-scroll di dalam sini */
+  overflow: auto; /* ini yang bikin scroll di dalam kotak */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+#tabelWrap table{
+  width: 100%;
+  border-collapse: separate; /* WAJIB separate, jangan collapse */
+  border-spacing: 0;
+  margin-top: 0;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible; /* jangan hidden, ini yang bikin sticky mati */
+}
+#tabelWrap thead th{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #76630f; /* samakan dengan warna header di foto */
+  color: #fff;
+}
+#tabelWrap thead tr{
+  background: #76630f;
+}
+  th{background:#76630f;color:#fff;padding:10px 8px;font-size:13px}
+  td{padding:8px;border-bottom:1px solid #eef2f7;text-align:center;font-size:14px}
+  td.nama{text-align:left;font-weight:600}
+  input.nilai{width:70px;padding:8px;text-align:center;border:2px solid #e2e8f0;border-radius:8px;font-size:15px}
+  input.nilai:disabled{background:#f1f5f9;color:#94a3b8}
+  input.nilai.error{border-color:#ef4444;background:#fef2f2}
+  input.nilai.filled{border-color:#22c55e;background:#f0fdf4}
+  .msg-error{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 14px;border-radius:10px;margin-top:12px;display:none}
+  .msg-error.show{display:block}
+ /* === TOMBOL SIMPAN - VERSI RAMPING & PROFESIONAL === */
+.actions{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: sticky;
+  bottom: 10px;
+  z-index: 30;
+  width: fit-content;
+  margin: 14px auto 0 auto;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  border-radius: 999px; /* jadi kapsul */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+  border: 1px solid #e2e8f0;
+}
+.actions button{
+  flex: none !important;
+  padding: 9px 18px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-radius: 999px !important;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.actions button:active{
+  transform: scale(0.96);
+}
+.btn-draft{
+  background: transparent !important;
+  color: #475569 !important;
+  border: none !important;
+}
+.btn-draft:hover{
+  background: #f1f5f9 !important;
+}
+.btn-save{
+  background: #0f766e !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(15,118,110,0.30) !important;
+}
+.btn-save:hover{
+  background: #0d9488 !important;
+}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
+  .overlay.show{display:flex}
+  .popup{background:#fff;padding:28px 22px;border-radius:20px;text-align:center;max-width:380px;width:100%}
+  .popup button{background:#0f766e;color:#fff;width:100%;padding:12px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
+  .loading{text-align:center;padding:20px;color:#64748b}
+  .filter-box{margin-top:12px;background:#fff;padding:12px;border-radius:12px;display:flex;gap:8px;flex-wrap:wrap}
+  .filter-box button{padding:9px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-weight:700}
+  .filter-box button.active{background:#0f7631;color:#fff;border-color:#0f766e}
+
+/* Bikin Cari + Refresh + Simpan jadi 1 baris */
+.bar-atas{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+.bar-atas .toolbar{
+  flex: 1;
+  display: flex !important;
+  margin-top: 0 !important;
+  gap: 8px;
+}
+.bar-atas .toolbar input{
+  flex: 1;
+  min-width: 0; /* biar tidak maksa lebar */
+}
+.bar-atas .toolbar button{
+  white-space: nowrap;
+  padding: 11px 12px;
+}
+.bar-atas .actions{
+  display: flex !important;
+  flex: none;
+  margin: 0 !important;
+  padding: 6px;
+  width: auto;
+  justify-content: flex-end;
+}
+
+/* === MODE BACA - KONTRAST TAPI ADEM === */
+body{
+  background: #F2F0E9 !important; /* krem kertas, bukan putih silau */
+  color: #1E293B !important;
+}
+h1{
+  color: #134E4A !important; /* hijau tua, lebih pekat dari sebelumnya */
+}
+p.sub{
+  color: #57534E !important;
+}
+.identitas .card,
+.filter-box,
+#tabelWrap{
+  background: #FFFEFA !important; /* putih hangat, bukan putih dingin */
+  border: 1px solid #E7E5E4 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+label{
+  color: #292524 !important;
+}
+select, input{
+  background: #FFFFFF !important;
+  border-color: #D6D3D1 !important;
+  color: #1C1917 !important;
+}
+select:focus, input:focus{
+  border-color: #0F766E !important;
+  box-shadow: 0 0 0 3px rgba(15,118,110,0.15) !important;
+}
+#tabelWrap thead th{
+  background: #134E4A !important; /* header lebih gelap, tulisan putih jadi lebih kontras */
+  color: #FFFFFF !important;
+}
+#tabelWrap td{
+  border-bottom: 1px solid #E7E5E4 !important;
+  color: #1C1917 !important;
+}
+#tabelWrap td.nama{
+  color: #0C0A09 !important;
+}
+input.nilai{
+  background: #FFFFFF !important;
+  border-color: #D6D3D1 !important;
+  color: #1C1917 !important;
+}
+input.nilai.filled{
+  background: #ECFDF5 !important;
+  border-color: #0F766E !important;
+}
+.bar-atas .actions{
+  background: #FFFEFA !important;
+  border: 1px solid #E7E5E4 !important;
+}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <h1>📋 Rekap Nilai Munaqosyah 2026</h1>
+  <p class="sub">Isi sesuai santri yang sudah Ustadz-Ustadzah uji. Yang lain, biarkan kosong.</p>
+  <div class="layout-utama"></div>
+  <div class="identitas">
+    <div class="card"><label>Nama Munaqisy</label>
+      <select id="penguji"><option value="">-- Pilih Nama Munaqisy --</option></select>
+    </div>
+    <div class="card"><label>Bidang Munaqosyah</label>
+      <select id="bidang"><option value="">-- Pilih Bidang --</option>
+        <option>Al Qur'an</option><option>Teori Tajwid</option><option>Teori Ghorib</option><option>Surat Pendek</option><option>Ayat Pilihan</option>
+      </select></div>
+    <div class="card"><label>Ruang</label>
+      <select id="ruang"><option value="">-- Pilih Ruang --</option></select></div>
+  </div>
 
-<div class="card">
-  <h2>Rekap Nilai Santri</h2>
-  <p class="sub">Pilih bidang dulu, baru tabel nilainya muncul</p>
+  <div class="filter-box" id="filterBox" style="display:none">
+    <button id="btnSemua" class="active" onclick="setFilter('semua')">Semua</button>
+    <button id="btnKosong" onclick="setFilter('kosong')">Yang Belum Dinilai Saja</button>
+    <button id="btnSaya" onclick="setFilter('saya')">Yang Sudah Saya Nilai</button>
+    <span style="align-self:center;color:#64748b;font-size:14px" id="infoFilter"></span>
+  </div>
 
-  <!-- 1. PILIH BIDANG -->
-  <label for="pilihBidang">Pilih Bidang Penilaian:</label>
-  <select id="pilihBidang" onchange="gantiBidang()">
-    <option value="">-- Pilih Bidang --</option>
-    <!-- 👇 option-nya harus sama persis dengan key di DAFTAR_BIDANG -->
-    <option value="Doa Harian">Doa Harian</option>
-    <option value="Sholat">Sholat</option>
-    <option value="Wudlu">Wudlu</option>
-    <option value="Akhlak">Akhlak</option>
-    <option value="Al-Qur'an">Al-Qur'an</option>
-  </select>
+  <div class="bar-atas">
+  <div class="toolbar" id="toolbar" style="display:none">
+    <input id="cari" placeholder="🔍 Cari nama / nomor peserta..." oninput="renderTabel(false)">
+    <button onclick="renderTabel(true)">🔄 Refresh</button>
+  </div>
 
-  <!-- 2. TABEL AKAN MUNCUL DI SINI -->
-  <div id="areaTabel"><p class="info">Silakan pilih bidang di atas.</p></div>
-
-  <button id="btnKirim" onclick="kirim()">Simpan Nilai</button>
-  <p class="info" id="infoSantri"></p>
-</div>
-
-<!-- 3. MODAL SUKSES - SUDAH DITENGAH PAKAI TRANSFORM -->
-<div id="modalSukses" style="display:none; position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; margin:0; padding:0;">
-  <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:white; width:90%; max-width:360px; padding:28px 24px; border-radius:20px; text-align:center;">
-    <div style="font-size:42px;">✅</div>
-    <h3 style="margin:12px 0 8px;">Alhamdulillaah!</h3>
-    <p id="teksModalSukses" style="color:#555; font-size:14px;">Nilai berhasil disimpan.</p>
-    <button onclick="tutupModalSukses()" style="margin:16px auto 0; padding:12px 24px; background:#1a7f4b; color:white; border:none; border-radius:12px; cursor:pointer; font-weight:700;">Alhamdulillaah</button>
+  <div class="actions" id="actions" style="display:none">
+    <button class="btn-draft" onclick="simpan(false)">Simpan Dulu</button>
+    <button class="btn-save" onclick="simpan(true)">✓ Simpan Final</button>
   </div>
 </div>
 
-<!-- 4. MODAL ERROR -->
-<div id="modalError" style="display:none; position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; margin:0; padding:0;">
-  <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:white; width:90%; max-width:380px; padding:24px; border-radius:20px; text-align:left; max-height:80vh; overflow-y:auto;">
-    <h3 id="judulModalError" style="margin:0 0 10px; text-align:center;">Masih Ada Yang Belum Diisi!</h3>
-    <p id="teksModalError" style="color:#333; font-size:14px; white-space:pre-line; margin:0;"></p>
-    <button onclick="tutupModalError()" style="display:block; margin:18px auto 0; padding:12px 24px; background:#c0392b; color:white; border:none; border-radius:12px; cursor:pointer; font-weight:700;">Oke, Saya Lengkapi</button>
-  </div>
+  <div class="msg-error" id="msgError"></div>
+  <div id="tabelWrap"></div>
+
 </div>
+<div class="overlay" id="overlay"><div class="popup"><div style="font-size:48px">🎉</div><h3 id="popupJudul">Berhasil!</h3><p id="popupIsi" style="color:#64748b"></p><button onclick="tutupPopup()">Oke</button></div></div>
 
 <script>
-// ============================================================
-// 👉 SESUAIKAN DI SINI 1: URL DATABASE KAMU (FORM LAMA)
-// ============================================================
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/XXXXX/exec"; // ganti dengan URL kamu yang lama
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrLaCmxZL7grWTMOKa5X_EHbIuzmq_35n4RTJMusBiwNH07qAqRltsl7L-ryQas4d9/exec";
 
-// ============================================================
-// 👉 SESUAIKAN DI SINI 2: NAMA BIDANG & KOLOMNYA
-// 4 bidang = 1 kolom, 1 bidang = 4 kolom
-// Key harus sama persis dengan value di <option> di atas
-// ============================================================
-const DAFTAR_BIDANG = {
-  "Doa Harian": ["Doa Harian"],
-  "Sholat": ["Sholat"],
-  "Wudlu": ["Wudlu"],
-  "Akhlak": ["Akhlak"],
-  "Al-Qur'an": ["Tajwid", "Makhraj", "Kelancaran", "Hafalan"]
-};
+// ⬇️ UBAH DAFTAR PENGUJI DI SINI SAJA ⬇️
+const DAFTAR_PENGUJI = [
+"Andik Purwanto",
+"Khozinatul Asror",
+"Moh. Mahfud",
+"Moh. Nasrulloh Al-Hariisi",
+"Nurul Huda",
+"Chisna Baroroh",
+"Imroatus Safaroh",
+"Mar'atul Khoir",
+"Ni'matul Kholis",
+"Sih Tri Lulus",
+"Agus Mabrur",
+"Ahmad Hasyim Asy'ari",
+"Aqibatul Afwa Hidayatullah",
+"Anik Setiyowati",
+"Muhammad Shobir Abdulloh",
+"Nor Chamid",
+"Atik Muhimmataz Zahro'",
+"Mujiati",
+"Ahmad Nafiul Anam",
+"Alimin",
+"Poeji Astutik",
+"Rina Astiani",
+"Moh. Ahlisil Haq",
+"Siswanto",
+"Ilya Munhamirotul Fauziyah",
+"Siti Rodliyah",
+];
+// ⬆️ SAMPAI SINI SAJA ⬆️
 
-let DAFTAR_SANTRI = [];
+let DATA_SISWA = [];
+let DATA_TERSIMPAN = {};
+let FILTER = 'semua';
+const KOLOM_5 = [
+  {key:'kelulusan',label:'Kelulusan',min:0,max:6},
+  {key:'fashohah',label:'Fashohah',min:0,max:28},
+  {key:'tajwid',label:'Tajwid',min:0,max:45},
+  {key:'ghorib',label:'Ghorib',min:0,max:10},
+  {key:'suara',label:'Suara & Lagu',min:0,max:7},
+];
+function getKolom(b){ return b==="Al Qur'an" ? KOLOM_5 : [{key:'nilai',label:b,min:0,max:90}]; }
+function getRuang(b){ return b==="Al Qur'an" ? [1,2,3] : [1,2]; }
+function filterPeserta(bidang,ruang){
+  if(bidang==="Al Qur'an"){
+    if(ruang==1) return DATA_SISWA.filter(s=>s.no>=1&&s.no<=89);
+    if(ruang==2) return DATA_SISWA.filter(s=>s.no>=90&&s.no<=178);
+    if(ruang==3) return DATA_SISWA.filter(s=>s.no>=179&&s.no<=266);
+  } else {
+    if(ruang==1) return DATA_SISWA.filter(s=>s.no>=1&&s.no<=133);
+    if(ruang==2) return DATA_SISWA.filter(s=>s.no>=134&&s.no<=266);
+  }
+  return [];
+}
+function getPenguji(){ return document.getElementById('penguji').value; }
+const pengujiEl=document.getElementById('penguji'), bidangEl=document.getElementById('bidang'), ruangEl=document.getElementById('ruang');
+DAFTAR_PENGUJI.forEach(n=>{ pengujiEl.innerHTML+=`<option value="${n}">${n}</option>`; });
 
-// ============================================================
-// AMBIL DATA SANTRI DARI DATABASE
-// ============================================================
-async function loadSantri(){
-  const info = document.getElementById("infoSantri");
+async function loadPeserta(){
+  try{ const res=await fetch(SCRIPT_URL+"?action=getPeserta"); const j=await res.json(); DATA_SISWA=j.peserta||[]; }catch(e){ console.log(e); }
+}
+loadPeserta();
+
+function setFilter(f){
+  FILTER=f;
+  document.getElementById('btnSemua').classList.toggle('active', f==='semua');
+  document.getElementById('btnKosong').classList.toggle('active', f==='kosong');
+  document.getElementById('btnSaya').classList.toggle('active', f==='saya');
+  renderTabel(false);
+}
+pengujiEl.addEventListener('change', ()=>{ if(bidangEl.value && ruangEl.value) renderTabel(true); });
+bidangEl.addEventListener('change',()=>{
+  const b=bidangEl.value; ruangEl.innerHTML='<option value="">-- Pilih Ruang --</option>';
+  if(!b) return;
+  getRuang(b).forEach(r=> ruangEl.innerHTML+=`<option value="${r}">${b==="Al Qur'an" ? `Al Qur'an ${r}` : `Ruang ${r}`}</option>`);
+  document.getElementById('tabelWrap').innerHTML=''; document.getElementById('actions').style.display='none';
+  document.getElementById('toolbar').style.display='none'; document.getElementById('filterBox').style.display='none';
+});
+ruangEl.addEventListener('change', ()=>renderTabel(true));
+
+async function renderTabel(refreshDariServer=true){
+  const bidang=bidangEl.value, ruang=ruangEl.value; if(!bidang||!ruang) return;
+  if(refreshDariServer){
+    document.getElementById('tabelWrap').innerHTML='<div class="loading">⏳ Memuat...</div>';
+    const r1=await fetch(`${SCRIPT_URL}?action=getNilai&bidang=${encodeURIComponent(bidang)}&ruang=${ruang}`).then(r=>r.json());
+    DATA_TERSIMPAN=r1.nilai||{};
+  }
+  const cari=(document.getElementById('cari').value||"").toLowerCase();
+  let peserta=filterPeserta(bidang,parseInt(ruang));
+  const saya=getPenguji();
+  const kolom=getKolom(bidang);
+
+  // Filter tombol
+  if(FILTER==='kosong') peserta=peserta.filter(s=> {
+    const v=DATA_TERSIMPAN[String(s.no)];
+    return !v || kolom.every(k=> v[k.key]==="" || v[k.key]==null || v[k.key]===undefined);
+  });
+  if(FILTER==='saya') peserta=peserta.filter(s=> {
+    const v=DATA_TERSIMPAN[String(s.no)];
+    return v && v.penguji===saya;
+  });
+  if(cari) peserta=peserta.filter(s=> s.nama.toLowerCase().includes(cari) || String(s.no).includes(cari));
+
+  const totalDiRuang = filterPeserta(bidang,parseInt(ruang)).length;
+  const sudahDinilai = filterPeserta(bidang,parseInt(ruang)).filter(s=>{
+    const v=DATA_TERSIMPAN[String(s.no)];
+    return v && kolom.some(k=> v[k.key]!=="" && v[k.key]!=null);
+  }).length;
+  document.getElementById('infoFilter').textContent = `Menampilkan ${peserta.length} dari ${totalDiRuang} • Sudah dinilai: ${sudahDinilai} • Belum: ${totalDiRuang - sudahDinilai}`;
+
+  let html=`<table><thead><tr><th>No</th><th>Nama</th>`;
+  kolom.forEach(k=> html+=`<th>${k.label}<br><small>(${k.min}-${k.max})</small></th>`);
+  html+=`</tr></thead><tbody>`;
+  peserta.forEach(s=>{
+    const val=DATA_TERSIMPAN[String(s.no)]||{};
+    const sudahAda = kolom.some(k=> val[k.key]!=="" && val[k.key]!=null && val[k.key]!==undefined);
+    const milikOrang = sudahAda && val.penguji && val.penguji!==saya;
+    const milikSaya = sudahAda && val.penguji===saya;
+
+    html+=`<tr><td>${s.no}</td><td class="nama">${s.nama}<br>`;
+    if(milikSaya) html+=`<small style="color:#16a34a">✅ Sudah kamu nilai (${val.status||'Draft'}) - bisa diedit</small>`;
+    else if(milikOrang) html+=`<small style="color:#ef4444">🔒 Sudah dinilai oleh ${val.penguji} - jangan diisi lagi</small>`;
+    else html+=`<small style="color:#94a3b8">Belum dinilai</small>`;
+    html+=`</td>`;
+    kolom.forEach(k=>{
+      let v = val[k.key]!==undefined && val[k.key]!=="" ? val[k.key] : '';
+      const elLama=document.querySelector(`input.nilai[data-no="${s.no}"][data-key="${k.key}"]`);
+      if(elLama && elLama.value!=="") v=elLama.value;
+      // Kalau sudah dinilai orang lain, kunci biar tidak ketimpa
+      const dis = milikOrang ? "disabled" : "";
+      html+=`<td><input class="nilai" data-no="${s.no}" data-key="${k.key}" data-min="${k.min}" data-max="${k.max}" value="${v}" type="number" ${dis} oninput="cekInput(this)"></td>`;
+    });
+    html+=`</tr>`;
+  });
+  html+=`</tbody></table>`;
+  if(!peserta.length) html=`<p style="text-align:center;color:#64748b;background:#fff;padding:20px;border-radius:12px">Tidak ada peserta di filter ini.</p>`;
+  document.getElementById('tabelWrap').innerHTML=html;
+  document.getElementById('actions').style.display='flex';
+  document.getElementById('toolbar').style.display='flex';
+  document.getElementById('filterBox').style.display='flex';
+  document.querySelectorAll('input.nilai').forEach(el=>cekInput(el));
+}
+function cekInput(el){
+  const v=el.value.trim(), min=+el.dataset.min, max=+el.dataset.max;
+  el.classList.remove('error','filled');
+  if(v==='') return;
+  const n=Number(v);
+  if(isNaN(n)||n<min||n>max) el.classList.add('error'); else el.classList.add('filled');
+}
+
+async function simpan(isFinal){
+  const bidang=bidangEl.value, ruang=ruangEl.value, kolom=getKolom(bidang);
+  const penguji=getPenguji(); if(!penguji) return alert("Pilih Nama Penguji dulu!");
+  // Ambil hanya yang diisi & tidak terkunci (milik orang lain tidak ikut)
+  const inputs=[...document.querySelectorAll('input.nilai:not(:disabled)')];
+  let rowsMap={}, salah=[];
+  inputs.forEach(el=>{
+    const v=el.value.trim();
+    if(v==='') return; // yang kosong dilewati, tidak nimpa nilai orang lain
+    const n=Number(v);
+    if(n<+el.dataset.min||n>+el.dataset.max){ el.classList.add('error'); salah.push(`No ${el.dataset.no} harus ${el.dataset.min}-${el.dataset.max}`); return; }
+    const no=el.dataset.no;
+    if(!rowsMap[no]) rowsMap[no]={bidang, ruang, no, nama: DATA_SISWA.find(s=>String(s.no)===String(no))?.nama||"", status: isFinal?"Final":"Draft", penguji};
+    rowsMap[no][el.dataset.key]=n;
+  });
+  // Kalau Final, cek yang diisi harus lengkap per santri
+  if(isFinal){
+    let tidakLengkap=[];
+    Object.values(rowsMap).forEach(r=>{
+      if(!kolom.every(k=> r[k.key]!=="" && r[k.key]!==undefined)) tidakLengkap.push(r.no);
+    });
+    if(tidakLengkap.length){
+      const box=document.getElementById('msgError');
+      box.innerHTML=`<b>Belum bisa Simpan Final!</b><br>Santri ini nilainya belum lengkap, lengkapi dulu atau pakai Simpan Sementara: No ${tidakLengkap.join(', ')}`;
+      box.classList.add('show'); return;
+    }
+  }
+  if(salah.length){ const box=document.getElementById('msgError'); box.innerHTML=`<b>Nilai di luar batas!</b><br>${salah.join('<br>')}`; box.classList.add('show'); return; }
+  document.getElementById('msgError').classList.remove('show');
+  const rows=Object.values(rowsMap);
+  if(!rows.length){ alert("Belum ada yang diisi! Isi dulu santri yang Panjenengan uji."); return; }
+  document.getElementById('popupJudul').textContent="⏳ Menyimpan...";
+  document.getElementById('popupIsi').textContent=`Menyimpan ${rows.length} santri...`;
+  document.getElementById('overlay').classList.add('show');
   try{
-    const res = await fetch(URL_APPS_SCRIPT);
-    const data = await res.json();
-
-    // 👇 SESUAIKAN BENTUK DATA-nya.
-    // Kalau di Sheet kamu kolomnya "nama", pakai yang ini:
-    // Kalau bentuknya sudah array string ["Ahmad","Fatimah"], pakai: DAFTAR_SANTRI = data;
-    // Kalau bentuknya { santri: [...] }, pakai: DAFTAR_SANTRI = data.santri.map(s => s.nama);
-    if(Array.isArray(data)){
-      DAFTAR_SANTRI = data.map(s => typeof s === "string" ? s : (s.nama || s.Nama || s.NAMA));
-    } else if(data.santri){
-      DAFTAR_SANTRI = data.santri.map(s => typeof s === "string" ? s : (s.nama || s.Nama));
-    } else if(data.data){
-      DAFTAR_SANTRI = data.data.map(s => typeof s === "string" ? s : (s.nama || s.Nama));
-    }
-
-    DAFTAR_SANTRI = DAFTAR_SANTRI.filter(Boolean);
-    info.textContent = DAFTAR_SANTRI.length + " santri dimuat dari database.";
+    await fetch(SCRIPT_URL,{method:'POST', body: JSON.stringify({rows})});
+    document.getElementById('popupJudul').textContent = isFinal ? 'Berhasil Disimpan Final! 🎉' : 'Berhasil Disimpan! 💾';
+    document.getElementById('popupIsi').textContent = isFinal ? `Nilai ${rows.length} santri sudah final.` : `Tersimpan. Yang kosong tidak ikut tersimpan, aman.`;
   }catch(e){
-    // Kalau database gagal / URL masih XXX, pakai data contoh biar bisa dites dulu
-    console.log("Gagal load database, pakai data contoh:", e);
-    DAFTAR_SANTRI = ["Muhammad Miftahul Lukman", "Ahmad Zaki", "Fatimah Zahra"];
-    info.textContent = "Database belum terhubung, pakai data contoh (3 santri). Ganti URL_APPS_SCRIPT.";
+    document.getElementById('popupJudul').textContent="Gagal Menyimpan";
+    document.getElementById('popupIsi').textContent="Cek internet / URL Apps Script.";
   }
 }
-loadSantri();
-
-// ============================================================
-// GAMBAR TABEL SESUAI BIDANG
-// ============================================================
-function gantiBidang(){
-  const bidang = document.getElementById("pilihBidang").value;
-  const area = document.getElementById("areaTabel");
-  const btn = document.getElementById("btnKirim");
-  if(!bidang){ area.innerHTML = '<p class="info">Silakan pilih bidang di atas.</p>'; btn.style.display = "none"; return; }
-  if(DAFTAR_SANTRI.length === 0){ area.innerHTML = '<p class="loading">Memuat data santri...</p>'; return; }
-
-  const kolomNilai = DAFTAR_BIDANG[bidang];
-
-  let html = `<table><tr><th>No</th><th class="nama">Nama Santri</th>`;
-  kolomNilai.forEach(k => { html += `<th>${k}</th>`; });
-  html += `</tr>`;
-
-  DAFTAR_SANTRI.forEach((nama, i) => {
-    html += `<tr><td class="no">${i+1}</td><td class="nama">${nama}</td>`;
-    kolomNilai.forEach(k => {
-      html += `<td><input type="number" min="0" max="95" data-nama="${nama}" data-kolom="${k}" placeholder="0-95"></td>`;
-    });
-    html += `</tr>`;
-  });
-  html += `</table>`;
-  area.innerHTML = html;
-  btn.style.display = "block";
-}
-
-// ============================================================
-// KIRIM & VALIDASI - DIHITUNG PER SANTRI
-// ============================================================
-function kirim(){
-  const bidang = document.getElementById("pilihBidang").value;
-  const kolomNilai = DAFTAR_BIDANG[bidang];
-  const inputs = document.querySelectorAll("#areaTabel input");
-  const yangKurang = [];
-  const hasil = [];
-  let pertamaYangKosong = null;
-
-  // Kelompokkan per santri
-  DAFTAR_SANTRI.forEach(nama => {
-    const row = { nama: nama, bidang: bidang };
-    let adaYangKosong = false;
-
-    kolomNilai.forEach(k => {
-      const el = document.querySelector(`#areaTabel input[data-nama="${nama}"][data-kolom="${k}"]`);
-      if(!el) return;
-      if(!el.value){
-        adaYangKosong = true;
-        el.style.border = "2px solid red";
-        if(!pertamaYangKosong) pertamaYangKosong = el;
-      } else {
-        el.style.border = "";
-        row[k] = el.value;
-      }
-    });
-
-    if(adaYangKosong){
-      yangKurang.push("• " + nama);
-    } else {
-      hasil.push(row);
-    }
-  });
-
-  // 👇 REDAKSI YANG KEMARIN SUDAH DISEPAKATI
-  if(yangKurang.length > 0){
-    tampilModalError("Ada " + yangKurang.length + " santri yang nilainya masih kosong:\n\n" + yangKurang.join("\n"), "Masih Ada Yang Belum Diisi!");
-    if(pertamaYangKosong) pertamaYangKosong.scrollIntoView({behavior:"smooth", block:"center"});
-    return;
-  }
-
-  // KIRIM KE DATABASE (Apps Script)
-  const btn = document.getElementById("btnKirim");
-  btn.disabled = true; btn.textContent = "Menyimpan...";
-
-  fetch(URL_APPS_SCRIPT, {
-    method: "POST",
-    body: JSON.stringify({ bidang: bidang, nilai: hasil })
-  })
-  .then(r => r.text())
-  .then(() => {
-    btn.disabled = false; btn.textContent = "Simpan Nilai";
-    document.getElementById("teksModalSukses").textContent = "Nilai " + bidang + " untuk " + hasil.length + " santri berhasil disimpan.";
-    document.getElementById("modalSukses").style.display = "block";
-  })
-  .catch(() => {
-    btn.disabled = false; btn.textContent = "Simpan Nilai";
-    // Kalau mau tes tanpa database, tetap anggap sukses
-    document.getElementById("teksModalSukses").textContent = "Nilai " + bidang + " untuk " + hasil.length + " santri berhasil disimpan. (Mode tes)";
-    document.getElementById("modalSukses").style.display = "block";
-  });
-}
-
-function tampilModalError(teks, judul){
-  document.getElementById("teksModalError").textContent = teks;
-  document.getElementById("judulModalError").textContent = judul || "Masih Ada Yang Belum Diisi!";
-  document.getElementById("modalError").style.display = "block";
-}
-function tutupModalError(){ document.getElementById("modalError").style.display = "none"; }
-function tutupModalSukses(){ document.getElementById("modalSukses").style.display = "none"; }
+function tutupPopup(){ document.getElementById('overlay').classList.remove('show'); if(document.getElementById('popupJudul').textContent.includes('Berhasil')) renderTabel(true); }
 </script>
 </body>
 </html>
